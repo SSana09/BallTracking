@@ -6,11 +6,20 @@ import core.DImage;
 
 public class ColorHighlight implements PixelFilter, Interactive {
 
-    private static int threshold = 50;
+    private static int threshold = 30;
 
-    private int targetRed = 105;
-    private int targetBlue = 50;
-    private int targetGreen = 27; // can edited
+    private int targetRed1 = 0;
+    private int targetBlue1 = 5;
+    private int targetGreen1 = 255; // green
+
+    private int targetRed2 = 255;
+    private int targetBlue2 = 0;
+    private int targetGreen2 = 165; // orange
+
+    private int targetRed3 = 0;
+    private int targetBlue3 = 255;
+    private int targetGreen3 = 0; // blue
+
 
     public DImage processImage(DImage img) {
         short[][] red = img.getRedChannel();
@@ -18,11 +27,21 @@ public class ColorHighlight implements PixelFilter, Interactive {
         short[][] green = img.getGreenChannel();
         for (int r=0; r<red.length; r++) {
             for (int c=0; c<red[r].length; c++) {
-                int redDiff = targetRed-red[r][c];
-                int greenDiff = targetGreen-green[r][c];
-                int blueDiff = targetBlue-blue[r][c];
-                int diff = (int) Math.sqrt(redDiff*redDiff + greenDiff*greenDiff + blueDiff*blueDiff);
-                if (diff>threshold) {
+                int redDiff = targetRed1-red[r][c];
+                int greenDiff = targetGreen1 -green[r][c];
+                int blueDiff = targetBlue1 -blue[r][c];
+                int diff1 = (int) Math.sqrt(redDiff*redDiff + greenDiff*greenDiff + blueDiff*blueDiff);
+                if (diff1 >threshold) {
+                    red[r][c] = (short) ((red[r][c] + green[r][c] + blue[r][c])/3);
+                    green[r][c] = (short) ((red[r][c] + green[r][c] + blue[r][c])/3);
+                    blue[r][c] = (short) ((red[r][c] + green[r][c] + blue[r][c])/3);
+                }
+
+                redDiff = targetRed2-red[r][c];
+                greenDiff = targetGreen2 -green[r][c];
+                blueDiff = targetBlue2 -blue[r][c];
+                int diff2 = (int) Math.sqrt(redDiff*redDiff + greenDiff*greenDiff + blueDiff*blueDiff);
+                if (diff2 >threshold) {
                     red[r][c] = (short) ((red[r][c] + green[r][c] + blue[r][c])/3);
                     green[r][c] = (short) ((red[r][c] + green[r][c] + blue[r][c])/3);
                     blue[r][c] = (short) ((red[r][c] + green[r][c] + blue[r][c])/3);
@@ -39,9 +58,9 @@ public class ColorHighlight implements PixelFilter, Interactive {
         short[][] red = img.getRedChannel();
         short[][] blue = img.getBlueChannel();
         short[][] green = img.getGreenChannel();
-        targetRed = red[mouseY][mouseX];
-        targetGreen = green[mouseY][mouseX];
-        targetBlue = blue[mouseY][mouseX];
+        targetRed1 = red[mouseY][mouseX];
+        targetGreen1 = green[mouseY][mouseX];
+        targetBlue1 = blue[mouseY][mouseX];
     }
 
     @Override
