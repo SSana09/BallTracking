@@ -12,10 +12,10 @@ public class FilterPipeline implements PixelFilter {
 
     public FilterPipeline() {
         PixelFilter blur = new Convolution();
-        PixelFilter highlight = new ColorHighlight();
+        PixelFilter mask = new ColorMask();
 
         filters.add(blur);
-        filters.add(highlight);
+        filters.add(mask);
     }
 
     @Override

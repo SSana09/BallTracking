@@ -20,17 +20,24 @@ public class Convolution implements PixelFilter {
     }
 
     public DImage processImage(DImage img) {
-        short[][] grid = img.getBWPixelGrid();
-        short[][] out = new short[grid.length][grid[0].length];
+        short[][] red = img.getRedChannel();
+        short[][] green = img.getGreenChannel();
+        short[][] blue = img.getBlueChannel();
+
+        short[][] out = new short[red.length][red[0].length];
         int kernelW = kernelW(kernel);
         int kernelL = kernel.length;
-        for (int r = 0; r<grid.length-kernelL-1; r++) {
-            for (int c=0; c<grid[r].length-kernelL-1; c++) {
-                short replaceW = (short) calcAvg(grid, kernel, r, c, kernelW);
-                out[r+(kernelL/2)-1][c+(kernelL/2)-1] = replaceW;
+        for (int r = 0; r<red.length-kernelL-1; r++) {
+            for (int c=0; c<red[r].length-kernelL-1; c++) {
+                short RreplaceW = (short) calcAvg(red, kernel, r, c, kernelW);
+                short GreplaceW = (short) calcAvg(red, kernel, r, c, kernelW);
+                short BreplaceW = (short) calcAvg(red, kernel, r, c, kernelW);
+                red[r+(kernelL/2)-1][c+(kernelL/2)-1] = RreplaceW;
+                green[r+(kernelL/2)-1][c+(kernelL/2)-1] = GreplaceW;
+                blue[r+(kernelL/2)-1][c+(kernelL/2)-1] = BreplaceW;
             }
         }
-        img.setPixels(out);
+        img.setColorChannels(red, green, blue);
         return img;
     }
 
