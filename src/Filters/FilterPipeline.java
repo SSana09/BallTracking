@@ -3,7 +3,6 @@ package Filters;
 import Interfaces.PixelFilter;
 import core.DImage;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class FilterPipeline implements PixelFilter {
@@ -13,7 +12,6 @@ public class FilterPipeline implements PixelFilter {
     public FilterPipeline() {
         PixelFilter blur = new Convolution();
         PixelFilter mask = new ColorMask();
-
         filters.add(blur);
         filters.add(mask);
     }
@@ -23,6 +21,9 @@ public class FilterPipeline implements PixelFilter {
         for(PixelFilter filter: filters) {
             img = filter.processImage(img);
         }
+        ColorMask mask = (ColorMask) filters.get(1);
+//        img = mask.refineMask(img, 25);
+        img = mask.refineMask(img, 10);
         return img;
     }
 }

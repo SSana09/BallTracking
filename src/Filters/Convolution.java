@@ -30,8 +30,8 @@ public class Convolution implements PixelFilter {
         for (int r = 0; r<red.length-kernelL-1; r++) {
             for (int c=0; c<red[r].length-kernelL-1; c++) {
                 short RreplaceW = (short) calcAvg(red, kernel, r, c, kernelW);
-                short GreplaceW = (short) calcAvg(red, kernel, r, c, kernelW);
-                short BreplaceW = (short) calcAvg(red, kernel, r, c, kernelW);
+                short GreplaceW = (short) calcAvg(green, kernel, r, c, kernelW);
+                short BreplaceW = (short) calcAvg(blue, kernel, r, c, kernelW);
                 red[r+(kernelL/2)-1][c+(kernelL/2)-1] = RreplaceW;
                 green[r+(kernelL/2)-1][c+(kernelL/2)-1] = GreplaceW;
                 blue[r+(kernelL/2)-1][c+(kernelL/2)-1] = BreplaceW;
