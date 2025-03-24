@@ -155,6 +155,7 @@ public class DisplayWindow extends PApplet {
 
         if (source == WEBCAM && webcam == null) {
             System.out.println("Loading webcam...");
+            System.out.println(Webcam.getWebcams().size());
             webcam = Webcam.getDefault();
 
             Dimension[] views = webcam.getViewSizes();

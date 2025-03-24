@@ -24,6 +24,7 @@ public class FilterPipeline implements PixelFilter {
         ColorMask mask = (ColorMask) filters.get(1);
 //        img = mask.refineMask(img, 25);
         img = mask.refineMask(img, 10);
+        img = mask.fillIn(img, 50);
         return img;
     }
 }
