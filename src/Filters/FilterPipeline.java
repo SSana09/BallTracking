@@ -22,9 +22,10 @@ public class FilterPipeline implements PixelFilter {
             img = filter.processImage(img);
         }
         ColorMask mask = (ColorMask) filters.get(1);
-//        img = mask.refineMask(img, 25);
-        img = mask.refineMask(img, 10);
-        img = mask.fillIn(img, 50);
+//        img = mask.eraseDebris(img, 25);
+        img = mask.eraseDebris(img, 50);
+        img = mask.fillInHoles(img, 20);
+        img = mask.fillInHoles(img, 15);
         return img;
     }
 }
